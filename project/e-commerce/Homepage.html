@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce Home Page</title>
+    <link rel="stylesheet" href="homepage.css">
+    
+
+    
+</head>
+<body>
+    <div class="nav-bar">
+        <ul>
+            <li><a href="Homepage.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="cart.html">Cart</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </div>
+    <div class="banner">
+        <h1>Limited Time Offer: 20% Off All Products!</h1>
+        <p>Use code SUMMER20 at checkout to redeem your discount.</p>
+    </div>
+    <div class="product-showcase">
+        <!-- products will be generated dynamically using JavaScript -->
+    </div>
+
+    <footer><p>
+         Contact Us via:
+         <a href="https://www.facebook.com/">Facebok page</a>
+        <a href="https://www.instagram.com/">Instagram page</a>
+        <a href="https://www.twitter.com/">Twitter page</a>
+        <br></br>
+        &copy; 2024 E-commerce Website. All rights reserved.
+    </p></footer>
+    
+    <!--Javascript-->
+    <script>
+        // define products data
+        const products = [
+            { id: 1, name: "black shoes", price: 29.99, image: "img/shoes.jpg" },
+            { id: 2, name: "laptop", price: 499.99, image: "img/laptop.jpg" },
+            { id: 3, name: "phone", price: 229.99, image: "img/phone.jpg" },
+            { id: 4, name: "t-shirt", price: 39.99, category: "fashion", image: "img/shirts.jpg" },
+            { id: 5, name: "microwave", price: 129.99, category: "home", image: "img/microwave.jpg" },
+            { id: 6, name: "iron ", price: 59.99, category: "home", image: "img/iron.jpg" },
+            
+        ];
+
+        // select product showcase container
+        const productShowcase = document.querySelector(".product-showcase");
+
+        // generate products dynamically
+        products.forEach((product) => {
+            const productHTML = `
+                <div class="product">
+                    <img src="${product.image}" alt="${product.name}">
+                    <h2>${product.name}</h2>
+                    <p>$${product.price}</p>
+                </div>
+            `;
+            productShowcase.insertAdjacentHTML("beforeend", productHTML);
+        });
+    </script>
+</body>
+</html>

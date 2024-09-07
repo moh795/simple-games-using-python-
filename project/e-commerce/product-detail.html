@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ECF0F1;
+        }
+
+        .nav-bar {
+            background-color: darkblue;
+            color: #fff;
+            padding: 1em;
+            text-align: center;
+        }
+
+        .nav-bar ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-bar li {
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+        .nav-bar a {
+            color: #fff;
+            font-family: cursive;
+            text-decoration: none;
+            font-size: 20px;
+        }
+
+        .product-detail {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .product-detail img {
+            width: 40%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-right: 20px;
+        }
+
+        .product-detail .product-info {
+            width: 60%;
+        }
+
+        .product-detail h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .product-detail p {
+            font-size: 18px;
+            margin-left: 400px;
+            color: #666;
+        }
+
+        .add-to-cart {
+            background-color: #f75757;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .add-to-cart:hover {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav-bar">
+        <ul>
+            <li><a href="Homepage.html">Home</a></li>
+            <li><a href="shop.html">Shop</a></li>
+            <li><a href="cart.html">Cart</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </div>
+    <div class="product-detail">
+        <!-- product detail will be generated dynamically using JavaScript -->
+    </div>
+
+    <script>
+        // get product id from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get("id");
+
+        // find product by id
+        const products = [
+            { id: 1, name: "phone", price: 229.99, category: "electronics", image: "img/phone.jpg", description: "This is a phone." },
+            { id: 2, name: "black shoes", price: 29.99, category: "fashion", image: "img/shoes.jpg", description: "this is a black shoes" },
+            { id: 3, name: "laptop", price: 499.99, category: "electronics", image: "img/laptop.jpg", description: "this is a hp laptop" },
+            { id: 4, name: "t-shirt", price: 39.99, category: "fashion", image: "img/shirts.jpg" },
+            { id: 5, name: "microwave", price: 129.99, category: "home", image: "img/microwave.jpg" },
+            { id: 6, name: "iron ", price: 59.99, category: "home", image: "img/iron.jpg" },
+        ];
+        const product = products.find((product) => product.id === parseInt(productId));
+
+        // generate product detail dynamically
+        const productDetailHTML = `
+            <img src="${product.image}" alt="${product.name}">
+            <h2>${product.name}</h2>
+            <p>$${product.price}</p>
+            <p>${product.description}</p>
+            <button class="add-to-cart">Add to Cart</button>
+        `;
+        document.querySelector(".product-detail").innerHTML = productDetailHTML;
+
+        // add event listener to "Add to Cart" button
+        document.querySelector(".add-to-cart").addEventListener("click", () => {
+            // get the cart from local storage
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+            // check if the product is already in the cart
+            let existingProduct = cart.find((item) => item.id === product.id);
+
+            if (existingProduct) {
+                // if the product is already in the cart, increment its quantity
+                existingProduct.quantity = (existingProduct.quantity || 1) + 1;
+            } else {
+                // if the product is not in the cart, add it with a quantity of 1
+                cart.push({ ...product, quantity: 1 });
+            }
+
+            // save the cart to local storage
+            localStorage.setItem("cart", JSON.stringify(cart));
+
+            // alert the user that the product has been added to the cart
+            alert(`"${product.name}" has been added to your cart.`);
+        });
+    </script>
+</body>
+
+</html>
